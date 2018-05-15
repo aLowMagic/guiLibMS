@@ -56,7 +56,7 @@ class Ui_title_box(object):
 
         self.retranslateUi(title_box)
         self.input_button.clicked.connect(self.indexJudge)
-        #QtCore.QMetaObject.connectSlotsByName(title_box)
+        QtCore.QMetaObject.connectSlotsByName(title_box)
 
     def retranslateUi(self, title_box):
         _translate = QtCore.QCoreApplication.translate
@@ -66,5 +66,27 @@ class Ui_title_box(object):
         self.label.setText(_translate("title_box", "用户名"))
         self.label_2.setText(_translate("title_box", "密码"))
 
+
+    def loginSucceed(self):
+        self.mainPara = QtWidgets.QWidget()
+        self.main_Window = Ui_MainWindow()
+        self.main_Window.setupMainWindow(self.mainPara)
+        self.mainPara.show()
+
     def indexJudge(self):
-        pass
+        userName = self.lineEdit.text()
+        userKey = self.lineEdit_2.text()
+        conn = pymysql.connect(host='localhost', port=3306, user='libStaffSelector', password='libStaffSelector',
+                               db='libMS', charset='utf8')
+        cur = conn.cursor()
+        sql = "select * from manage_list where manage_name = '%s' and manage_key = '%s';" % (userName, userKey)
+        if cur.execute(sql) != 0:
+            self.loginSucceed()
+            #self.close()
+            self.lineEdit.clear()
+            self.lineEdit_2.clear()
+        else:
+            self.msgBox.show()
+
+    #def close(self):
+        #self.close()
