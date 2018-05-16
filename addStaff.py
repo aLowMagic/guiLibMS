@@ -86,7 +86,6 @@ class Ui_addStaff(object):
                 sqlSelect = "select * from manage_list where manage_name = '%s' or manage_id = '%s';" % (manageName, manageId)
                 row = cur.execute(sqlSelect)
                 if row == 0:
-                    print(row)
                     sqlInsert = "insert into manage_list(manage_name, manage_key, manage_id) values('%s','%s','%s');"%(manageName, manageKey, manageId)
                     cur.execute(sqlInsert)
                     conn.commit()

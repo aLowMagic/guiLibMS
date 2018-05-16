@@ -7,12 +7,13 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QTableWidgetItem
+import pymysql
 
 class Ui_booksManage(object):
     def setupUi(self, booksManage):
         booksManage.setObjectName("booksManage")
         booksManage.resize(761, 411)
-        #booksManage.setWindowOpacity(1.0)
         booksManage.setStyleSheet("*{background-color: rgb(255, 255, 255)}")
         self.tableWidget = QtWidgets.QTableWidget(booksManage)
         self.tableWidget.setGeometry(QtCore.QRect(0, 0, 621, 331))
@@ -95,7 +96,7 @@ class Ui_booksManage(object):
         #self.pushButton_3.clicked.connect(self.returnToFirstPage)
         #self.pushButton_4.clicked.connect(self.beforePage)
         #self.pushButton_5.clicked.connect(self.nextPage)
-        #self.pushButton.clicked.connect(self.bookSearch)
+        self.pushButton.clicked.connect(self.bookSearch)
         #self.pushButton_6.clicked.connect(self.insertBook)
         QtCore.QMetaObject.connectSlotsByName(booksManage)
 
@@ -140,6 +141,12 @@ class Ui_booksManage(object):
         item.setText(_translate("booksManage", "图书位置"))
         item = self.tableWidget.horizontalHeaderItem(8)
         item.setText(_translate("booksManage", "图书价格"))
+        __sortingEnabled = self.tableWidget.isSortingEnabled()
+        self.tableWidget.setSortingEnabled(False)
+
+        self.tableItems("", "", "", "")
+
+        self.tableWidget.setSortingEnabled(__sortingEnabled)
         self.lineEdit.setText(_translate("booksManage", "书名"))
         self.lineEdit_2.setText(_translate("booksManage", "ISBN号"))
         self.lineEdit_3.setText(_translate("booksManage", "作者"))
@@ -160,7 +167,48 @@ class Ui_booksManage(object):
         pass
 
     def bookSearch(self):
-        pass
+        bookName = self.lineEdit.text()
+        bookIsbn = self.lineEdit_2.text()
+        bookAuthor = self.lineEdit_3.text()
+        bookPublisher = self.lineEdit_4.text()
+        self.tableItems(bookName, bookIsbn, bookAuthor, bookPublisher)
 
     def insertBook(self):
         pass
+
+    def tableItems(self, name, isbn, author, publisher): #刷新表格
+        if (name == "书名"):
+            name = ""
+        if (isbn == "ISBN号"):
+            isbn = ""
+        if (author == "作者"):
+            author = ""
+        if (publisher == "出版社"):
+            publisher = ""
+        conn = pymysql.connect(host='localhost', port=3306, user='root', password='admin', db='libMS', use_unicode=True,
+                               charset='utf8')
+        cur = conn.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = "select * from books_catalogue"
+        if isbn != "":
+        
+        row = cur.execute(sql)
+        if row == 0:
+            self.msgBox_noStaff.show()
+        elif row != 0:
+            resultRows = cur.fetchall()
+            self.result = resultRows
+            self.allRows = row
+            self.currentPage = 0
+            cur.close()
+            conn.close()
+            self.tableWidget.clearContents()
+            for i in range(row):
+                self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i]['title']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['isbn']))
+                self.tableWidget.setItem(i, 2, QTableWidgetItem(resultRows[i]['author']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['classifaction']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['publisher']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['book_num']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['in_shelf_time']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['book_position']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['price']))

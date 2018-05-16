@@ -84,6 +84,8 @@ class Ui_staffManage(object):
         self.pushButton_2.clicked.connect(self.deleteStaff)
         self.pushButton_3.clicked.connect(self.editStaff)
         self.pushButton_4.clicked.connect(self.addStaff)
+        self.pushButton_5.clicked.connect(self.beforePage)
+        self.pushButton_6.clicked.connect(self.nextPage)
         QtCore.QMetaObject.connectSlotsByName(staffManage)
 
         self.msgBox_noItems = QMessageBox(QMessageBox.Information, "无法查询", "请输入查询内容", QMessageBox.Ok)
@@ -93,8 +95,6 @@ class Ui_staffManage(object):
         self.msgBox_noSelected = QMessageBox(QMessageBox.Information, "请选择一个项目", "请选择一个项目！", QMessageBox.Ok)
         self.msgBox_noUse = QMessageBox(QMessageBox.Information, "暂未开启该功能", "暂未开启该功能！", QMessageBox.Ok)
 
-        self.msgvarible = 0
-        self.mark = 0
 
     def retranslateUi(self, staffManage):
         _translate = QtCore.QCoreApplication.translate
@@ -126,28 +126,7 @@ class Ui_staffManage(object):
         __sortingEnabled = self.tableWidget.isSortingEnabled()
         self.tableWidget.setSortingEnabled(False)
 
-        conn = pymysql.connect(host='localhost', port=3306, user='root', password='admin', db='libMS', use_unicode=True, charset='utf8')
-        cur = conn.cursor(cursor=pymysql.cursors.DictCursor)
-        sqlSelectAllManager = "select manage_name, manage_id from manage_list;"
-        rows = cur.execute(sqlSelectAllManager)
-        result = cur.fetchall()
-        if (rows == 0):
-            itemsNum = 0
-        elif (rows <= 10):
-            itemsNum = rows
-        else:
-            itemsNum = 10
-        if itemsNum != 0:
-            self.msgvarible = rows // 10
-            print(self.msgvarible)
-            for row in range(itemsNum):
-                try:
-                    self.tableWidget.setItem(row, 0, QTableWidgetItem(result[row]['manage_name']))
-                    self.tableWidget.setItem(row, 1, QTableWidgetItem(result[row]['manage_id']))
-                except:
-                    pass
-        cur.close()
-        conn.close()
+        self.tableItems("", "")
 
         self.tableWidget.setSortingEnabled(__sortingEnabled)
         self.lineEdit.setText(_translate("staffManage", "员工姓名"))
@@ -165,8 +144,6 @@ class Ui_staffManage(object):
         name = self.lineEdit.text()
         id = self.lineEdit_2.text()
         self.tableItems(name, id)
-
-
 
     def deleteStaff(self):
         if (self.tableWidget.currentRow() == 0 or self.tableWidget.currentItem() == None):
@@ -189,8 +166,6 @@ class Ui_staffManage(object):
             except:
                 self.msgBox_deleteFailed.show()
 
-
-
     def editStaff(self):
         self.msgBox_noUse.show()
 
@@ -201,40 +176,63 @@ class Ui_staffManage(object):
         self.paraAddStaff.show()
 
     def beforePage(self):
-        if (self.mark == 0):
+        if (self.currentPage == 0):
             pass
-        
+        else:
+            self.tableWidget.clearContents()
+            resultRows = self.result
+            self.currentPage = self.currentPage - 1
+            for i in range(10):
+                self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i + (self.currentPage)*10]['manage_name']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i + (self.currentPage)*10]['manage_id']))
 
     def nextPage(self):
-        if(self.mark == self.msgvarible):
+        if(self.currentPage == (self.allRows-1) // 10):
             pass
+        elif(self.currentPage < (self.allRows-1) // 10):
+            self.tableWidget.clearContents()
+            resultRows = self.result
+            self.currentPage = self.currentPage + 1
+            #判断该页行数是否够10
+            if (self.allRows >= 10*(self.currentPage + 1)):
+                rowNum = 10
+            elif (self.allRows <= 10*(self.currentPage + 1)):
+                rowNum = self.allRows - 10 * self.currentPage
 
+            for i in range(rowNum):
+                self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i + (self.currentPage)*10]['manage_name']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i + (self.currentPage)*10]['manage_id']))
 
-    def tableItems(self, name, id):
-        judge1 = 1
-        judge2 = 1
-        if (name == "" or name == "员工姓名"):
-            judge1 = 0
-        if (id == "" or id == "员工id"):
-            judge2 = 0
+    def tableItems(self, name, id): #刷新表格
+        if (name == "员工姓名"):
+            name = ""
+        if (id == "员工id"):
+            id = ""
         conn = pymysql.connect(host='localhost', port=3306, user='root', password='admin', db='libMS', use_unicode=True,
                                charset='utf8')
         cur = conn.cursor(cursor=pymysql.cursors.DictCursor)
-        if judge2 == 1:
-            sql = "select manage_name, manage_id from manage_list where manage_id = '%s';" % id
-        elif judge1 == 1:
-            sql = "select manage_name, manage_id from manage_list where manage_name = '%s'" % name
-        elif judge1 == 0 and judge2 == 0:
-            sql = "select manage_name, manage_id from manage_list;"
-
+        sql = "select manage_name, manage_id from manage_list"
+        if name != "" and id != "":
+            sql += " where manage_name='%s' and manage_id='%s';" % (name, id)
+        elif name != "":
+            sql += " where manage_name='%s';" % name
+        elif id != "":
+            sql += "where manage_id='%s';" % id
+        else:
+            sql += ';'
+        print(sql)
         row = cur.execute(sql)
         if row == 0:
             self.msgBox_noStaff.show()
+            print(row)
         elif row != 0:
-            result = cur.fetchall()
-            self.tableWidget.clearContents()
-            for i in range(row):
-                self.tableWidget.setItem(i, 0, QTableWidgetItem(result[i]['manage_name']))
-                self.tableWidget.setItem(i, 1, QTableWidgetItem(result[i]['manage_id']))
+            resultRows = cur.fetchall()
+            self.result = resultRows
+            self.allRows = row
+            self.currentPage = 0
             cur.close()
             conn.close()
+            self.tableWidget.clearContents()
+            for i in range(row):
+                self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i]['manage_name']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['manage_id']))

@@ -7,6 +7,9 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox
+import pymysql
+import addUser
 
 class Ui_userManage(object):
     def setupUi(self, userManage):
@@ -74,11 +77,15 @@ class Ui_userManage(object):
         self.pushButton_6.setGeometry(QtCore.QRect(190, 350, 80, 30))
         self.pushButton_6.setObjectName("pushButton_6")
 
+        self.msgBox_noUser = QMessageBox(QMessageBox.Information, "查询失败！", "无该用户", QMessageBox.Ok)
+        self.msgBox_noSelected = QMessageBox(QMessageBox.Information, "未选中用户", "请选择一个项目！", QMessageBox.Ok)
+        self.msgBox_deleteFailed = QMessageBox(QMessageBox.Information, "删除失败！", "无法删除", QMessageBox.Ok)
+
         self.retranslateUi(userManage)
-        #self.pushButton.clicked.connect(self.searchStaff)
-        #self.pushButton_2.clicked.connect(self.deleteStaff)
+        self.pushButton.clicked.connect(self.searchUser)
+        self.pushButton_2.clicked.connect(self.deleteUser)
         #self.pushButton_3.clicked.connect(self.editStaff)
-        #self.pushButton_4.clicked.connect(self.addStaff)
+        self.pushButton_4.clicked.connect(self.addUser)
         #self.pushButton_6.clicked.connect(self.nextPage)
         #self.pushButton_5.clicked.connect(self.beforePage)
         QtCore.QMetaObject.connectSlotsByName(userManage)
@@ -112,6 +119,9 @@ class Ui_userManage(object):
         item.setText(_translate("userManage", "读者证件号码"))
         __sortingEnabled = self.tableWidget.isSortingEnabled()
         self.tableWidget.setSortingEnabled(False)
+
+        self.tableItems("", "")
+
         self.tableWidget.setSortingEnabled(__sortingEnabled)
         self.lineEdit.setText(_translate("userManage", "读者姓名"))
         self.lineEdit_2.setText(_translate("userManage", "读者id"))
@@ -122,3 +132,98 @@ class Ui_userManage(object):
         self.pushButton_5.setText(_translate("userManage", "下一页"))
         self.pushButton_6.setText(_translate("userManage", "上一页"))
 
+
+    def searchUser(self):
+        user_name = self.lineEdit.text()
+        user_id = self.lineEdit_2.text()
+        self.tableItems(user_name, user_id)
+
+    def deleteUser(self):
+        if (self.tableWidget.currentRow() == 0 or self.tableWidget.currentItem() == None):
+            self.msgBox_noSelected.show()
+        else:
+            row = self.tableWidget.currentRow()
+            userName = self.tableWidget.item(row, 0).text()
+            userId = self.tableWidget.item(row, 1).text()
+            try:
+                conn = pymysql.connect(host='localhost', port=3306, user='root', password='admin', db='libMS',
+                                       use_unicode=True, charset='utf8')
+                cur = conn.cursor(cursor=pymysql.cursors.DictCursor)
+                sql = "delete from user_manage where user_name = '%s' and user_id = '%s';"%(userName, userId)
+                cur.execute(sql)
+                conn.commit()
+                cur.close()
+                conn.close()
+                self.tableWidget.clearContents()
+                self.tableItems("", "")
+            except:
+                self.msgBox_deleteFailed.show()
+
+    def addUser(self):
+        self.paraAddUser = QtWidgets.QDialog()
+        self.window = addUser.Ui_addUser()
+        self.window.setupUi(self.paraAddUser)
+        self.paraAddUser.show()
+
+    def beforePage(self):
+        if (self.currentPage == 0):
+            pass
+        else:
+            self.tableWidget.clearContents()
+            resultRows = self.result
+            self.currentPage = self.currentPage - 1
+            for i in range(10):
+                self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i + (self.currentPage)*10]['user_name']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i + (self.currentPage)*10]['user_id']))
+
+    def nextPage(self):
+        if(self.currentPage == (self.allRows-1) // 10):
+            pass
+        elif(self.currentPage < (self.allRows-1) // 10):
+            self.tableWidget.clearContents()
+            resultRows = self.result
+            self.currentPage = self.currentPage + 1
+            #判断该页行数是否够10
+            if (self.allRows >= 10*(self.currentPage + 1)):
+                rowNum = 10
+            elif (self.allRows <= 10*(self.currentPage + 1)):
+                rowNum = self.allRows - 10 * self.currentPage
+
+            for i in range(rowNum):
+                self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i + (self.currentPage)*10]['user_name']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i + (self.currentPage)*10]['user_id']))
+
+
+
+    def tableItems(self, user_name, user_id):
+        judge1 = 1
+        judge2 = 1
+        if (user_name == "" or user_name == "读者姓名"):
+            judge1 = 0
+        if (user_id == "" or user_id == "读者id"):
+            judge2 = 0
+        conn = pymysql.connect(host='localhost', port=3306, user='root', password='admin', db='libMS', use_unicode=True,
+                               charset='utf8')
+        cur = conn.cursor(cursor=pymysql.cursors.DictCursor)
+        if judge2 == 1:
+            sql = "select user_name, user_id from user_manage where user_id = '%s';" % user_id
+        elif judge1 == 1:
+            sql = "select user_name, user_id from user_manage where user_name = '%s'" % user_name
+        elif judge1 == 0 and judge2 == 0:
+            sql = "select user_name, user_id from user_manage;"
+
+        row = cur.execute(sql)
+        if row == 0:
+            self.msgBox_noUser.show()
+        elif row != 0:
+            resultRows = cur.fetchall()
+            if judge1 == 0 and judge2 == 0:
+                self.result = resultRows
+                self.allRows = row
+                self.currentPage = 0
+            cur.close()
+            conn.close()
+            self.tableWidget.clearContents()
+            for i in range(row):
+                self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i]['user_name']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['user_id']))
