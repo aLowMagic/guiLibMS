@@ -196,34 +196,36 @@ class Ui_userManage(object):
 
 
     def tableItems(self, user_name, user_id):
-        judge1 = 1
-        judge2 = 1
-        if (user_name == "" or user_name == "读者姓名"):
-            judge1 = 0
-        if (user_id == "" or user_id == "读者id"):
-            judge2 = 0
+        if (user_name == "读者姓名"):
+            user_name = ""
+        if (user_id == "读者id"):
+            user_id = ""
         conn = pymysql.connect(host='localhost', port=3306, user='root', password='admin', db='libMS', use_unicode=True,
                                charset='utf8')
         cur = conn.cursor(cursor=pymysql.cursors.DictCursor)
-        if judge2 == 1:
-            sql = "select user_name, user_id from user_manage where user_id = '%s';" % user_id
-        elif judge1 == 1:
-            sql = "select user_name, user_id from user_manage where user_name = '%s'" % user_name
-        elif judge1 == 0 and judge2 == 0:
-            sql = "select user_name, user_id from user_manage;"
+        sql = "select user_name, user_id from user_manage"
+        if user_name != "" and user_id != "":
+            sql += " where user_name = '%s' and user_id = '%s';" %(user_name, user_id)
+        elif user_name != "":
+            sql += " where user_name = '%s';" % user_name
+        elif user_id != "":
+            sql += " where user_id = '%s';" % user_id
+        else:
+            sql += ";"
 
         row = cur.execute(sql)
         if row == 0:
             self.msgBox_noUser.show()
         elif row != 0:
             resultRows = cur.fetchall()
-            if judge1 == 0 and judge2 == 0:
-                self.result = resultRows
-                self.allRows = row
-                self.currentPage = 0
+            self.result = resultRows
+            self.allRows = row
+            self.currentPage = 0
             cur.close()
             conn.close()
             self.tableWidget.clearContents()
+            if row > 10:
+                row = 10
             for i in range(row):
                 self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i]['user_name']))
                 self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['user_id']))

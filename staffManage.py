@@ -220,11 +220,9 @@ class Ui_staffManage(object):
             sql += "where manage_id='%s';" % id
         else:
             sql += ';'
-        print(sql)
         row = cur.execute(sql)
         if row == 0:
             self.msgBox_noStaff.show()
-            print(row)
         elif row != 0:
             resultRows = cur.fetchall()
             self.result = resultRows
@@ -233,6 +231,8 @@ class Ui_staffManage(object):
             cur.close()
             conn.close()
             self.tableWidget.clearContents()
+            if row > 10:
+                row = 10
             for i in range(row):
                 self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i]['manage_name']))
                 self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['manage_id']))

@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="58a04fcc-ce71-4eec-8a5f-e858615fffb2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/addUser.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addStaff.py" beforeDir="false" afterPath="$PROJECT_DIR$/addStaff.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addUser.ui" beforeDir="false" afterPath="$PROJECT_DIR$/uiFile/addUser.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bookManage.py" beforeDir="false" afterPath="$PROJECT_DIR$/bookManage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/staffManage.py" beforeDir="false" afterPath="$PROJECT_DIR$/staffManage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userManage.py" beforeDir="false" afterPath="$PROJECT_DIR$/userManage.py" afterDir="false" />
@@ -18,29 +16,17 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/guiLibMS$python3_6.coverage" NAME="python3.6 Coverage Results" MODIFIED="1526484226861" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/guiLibMS$python3_6.coverage" NAME="python3.6 Coverage Results" MODIFIED="1526491361878" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/guiLibMS$test.coverage" NAME="python3.6 Coverage Results" MODIFIED="1525510496025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/.anaconda/navigator" />
     <SUITE FILE_PATH="coverage/guiLibMS$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1525590799207" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/.anaconda/navigator" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="893">
-              <caret line="51" column="55" selection-start-line="51" selection-start-column="55" selection-end-line="51" selection-end-column="55" />
-              <folding>
-                <element signature="e#194#236#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="MainWindow.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MainWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-258">
-              <caret line="60" column="60" selection-start-line="60" selection-start-column="45" selection-end-line="60" selection-end-column="60" />
+            <state relative-caret-position="252">
+              <caret line="88" column="25" lean-forward="true" selection-start-line="88" selection-start-column="25" selection-end-line="88" selection-end-column="25" />
               <folding>
                 <element signature="e#199#241#0" expanded="true" />
               </folding>
@@ -48,11 +34,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bookManage.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="userManage.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/userManage.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="317">
+              <caret line="228" column="30" selection-start-line="228" selection-start-column="30" selection-end-line="228" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="staffManage.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/staffManage.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="191" column="56" lean-forward="true" selection-start-line="191" selection-start-column="56" selection-end-line="191" selection-end-column="56" />
+              <folding>
+                <element signature="e#200#242#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="borrow_return.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/borrow_return.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2223">
+              <caret line="68" column="76" lean-forward="true" selection-start-line="61" selection-start-column="7" selection-end-line="68" selection-end-column="76" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bookManage.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bookManage.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="317">
-              <caret line="193" column="30" lean-forward="true" selection-start-line="193" selection-start-column="30" selection-end-line="193" selection-end-column="30" />
+              <caret line="253" column="37" lean-forward="true" selection-start-line="253" selection-start-column="37" selection-end-line="253" selection-end-column="37" />
               <folding>
                 <element signature="e#199#241#0" expanded="true" />
               </folding>
@@ -88,15 +104,16 @@
         <option value="$PROJECT_DIR$/index.py" />
         <option value="$PROJECT_DIR$/MainFile.py" />
         <option value="$PROJECT_DIR$/MainWindow.py" />
-        <option value="$PROJECT_DIR$/borrow_return.py" />
         <option value="$PROJECT_DIR$/edit_Staff.py" />
         <option value="$PROJECT_DIR$/add_Staff.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/addStaff.py" />
         <option value="$PROJECT_DIR$/addUser.py" />
+        <option value="$PROJECT_DIR$/borrow_return.py" />
+        <option value="$PROJECT_DIR$/bookManage.py" />
+        <option value="$PROJECT_DIR$/addBooks.py" />
         <option value="$PROJECT_DIR$/userManage.py" />
         <option value="$PROJECT_DIR$/staffManage.py" />
-        <option value="$PROJECT_DIR$/bookManage.py" />
       </list>
     </option>
   </component>
@@ -124,9 +141,9 @@
       <path value="C:/ProgramData/Anaconda3/Lib/site-packages/jupyterlab/themes/@jupyterlab/theme-light-extension/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="34" />
-    <option name="y" value="83" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="218" />
+    <option name="y" value="9" />
     <option name="width" value="1346" />
     <option name="height" value="710" />
   </component>
@@ -149,12 +166,6 @@
               <item name="guiLibMS" type="b2602c69:ProjectViewProjectNode" />
               <item name="guiLibMS" type="47feb1d3:ProjectViewModuleNode" />
               <item name="guiLibMS" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="guiLibMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="guiLibMS" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="guiLibMS" type="462c0819:PsiDirectoryNode" />
-              <item name="uiFile" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -180,13 +191,13 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\thePr\Documents\github\guiLibMS" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\thePr\Documents\github\guiLibMS\uiFile" />
       <recent name="C:\Users\thePr\Documents\github\guiLibMS" />
       <recent name="C:\Users\thePr\Documents\github\guiLibMS\venv" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\thePr\Documents\github\guiLibMS" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -282,7 +293,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Python Console" order="10" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.21178344" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.21178344" />
       <window_info anchor="bottom" id="Terminal" order="11" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14787701" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
@@ -312,23 +323,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/MainFile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="14" column="15" lean-forward="true" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1482">
-          <caret line="78" selection-start-line="78" selection-end-line="78" />
-          <folding>
-            <element signature="e#194#236#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -591,27 +585,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/borrow_return.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-152">
-          <caret line="116" column="20" selection-start-line="116" selection-start-column="13" selection-end-line="116" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/edit_Staff.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="659">
           <caret line="46" column="60" selection-start-line="46" selection-start-column="60" selection-end-line="46" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="893">
-          <caret line="51" column="55" selection-start-line="51" selection-start-column="55" selection-end-line="51" selection-end-column="55" />
-          <folding>
-            <element signature="e#194#236#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -622,9 +599,6 @@
           <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addUser.ui">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/addUser.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -646,33 +620,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/userManage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="122" column="30" selection-start-line="122" selection-start-column="30" selection-end-line="122" selection-end-column="30" />
-          <folding>
-            <element signature="e#199#241#0" expanded="true" />
-            <element signature="e#6536#6540#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MainWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-258">
-          <caret line="60" column="60" selection-start-line="60" selection-start-column="45" selection-end-line="60" selection-end-column="60" />
+        <state relative-caret-position="252">
+          <caret line="88" column="25" lean-forward="true" selection-start-line="88" selection-start-column="25" selection-end-line="88" selection-end-column="25" />
           <folding>
             <element signature="e#199#241#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/staffManage.py">
+    <entry file="file://$USER_HOME$/.PyCharm2018.1/system/python_stubs/-313451744/PyQt5/QtWidgets/QDoubleSpinBox.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="221" column="21" selection-start-line="221" selection-start-column="21" selection-end-line="221" selection-end-column="21" />
+        <state relative-caret-position="1362">
+          <caret line="249" column="8" selection-start-line="249" selection-start-column="8" selection-end-line="249" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2018.1/system/python_stubs/-313451744/PyQt5/QtWidgets/QMessageBox.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6498">
+          <caret line="359" column="4" selection-start-line="359" selection-start-column="4" selection-end-line="359" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-429">
+          <caret line="51" column="55" selection-start-line="51" selection-start-column="55" selection-end-line="51" selection-end-column="55" />
           <folding>
-            <element signature="e#200#242#0" expanded="true" />
+            <element signature="e#194#236#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/borrow_return.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2223">
+          <caret line="68" column="76" lean-forward="true" selection-start-line="61" selection-start-column="7" selection-end-line="68" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addBooks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="488">
+          <caret line="185" column="46" selection-start-line="185" selection-start-column="46" selection-end-line="185" selection-end-column="46" />
+          <folding>
+            <element signature="e#197#239#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -680,9 +674,26 @@
     <entry file="file://$PROJECT_DIR$/bookManage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="317">
-          <caret line="193" column="30" lean-forward="true" selection-start-line="193" selection-start-column="30" selection-end-line="193" selection-end-column="30" />
+          <caret line="253" column="37" lean-forward="true" selection-start-line="253" selection-start-column="37" selection-end-line="253" selection-end-column="37" />
           <folding>
             <element signature="e#199#241#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/userManage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="228" column="30" selection-start-line="228" selection-start-column="30" selection-end-line="228" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/staffManage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="191" column="56" lean-forward="true" selection-start-line="191" selection-start-column="56" selection-end-line="191" selection-end-column="56" />
+          <folding>
+            <element signature="e#200#242#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -7,8 +7,10 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5.QtWidgets import QTableWidgetItem, QTableWidget
 import pymysql
+import datetime
+import addBooks
 
 class Ui_booksManage(object):
     def setupUi(self, booksManage):
@@ -16,6 +18,8 @@ class Ui_booksManage(object):
         booksManage.resize(761, 411)
         booksManage.setStyleSheet("*{background-color: rgb(255, 255, 255)}")
         self.tableWidget = QtWidgets.QTableWidget(booksManage)
+        self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.tableWidget.setSelectionBehavior(QTableWidget.SelectRows)
         self.tableWidget.setGeometry(QtCore.QRect(0, 0, 621, 331))
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(9)
@@ -93,11 +97,11 @@ class Ui_booksManage(object):
         self.pushButton_6.setObjectName("pushButton_6")
 
         self.retranslateUi(booksManage)
-        #self.pushButton_3.clicked.connect(self.returnToFirstPage)
-        #self.pushButton_4.clicked.connect(self.beforePage)
-        #self.pushButton_5.clicked.connect(self.nextPage)
+        self.pushButton_3.clicked.connect(self.returnToFirstPage)
+        self.pushButton_4.clicked.connect(self.beforePage)
+        self.pushButton_5.clicked.connect(self.nextPage)
         self.pushButton.clicked.connect(self.bookSearch)
-        #self.pushButton_6.clicked.connect(self.insertBook)
+        self.pushButton_6.clicked.connect(self.insertBook)
         QtCore.QMetaObject.connectSlotsByName(booksManage)
 
     def retranslateUi(self, booksManage):
@@ -158,13 +162,58 @@ class Ui_booksManage(object):
         self.pushButton_6.setText(_translate("booksManage", "录入书目"))
 
     def returnToFirstPage(self):
-        pass
+        bookName = self.lineEdit.text()
+        bookIsbn = self.lineEdit_2.text()
+        bookAuthor = self.lineEdit_3.text()
+        bookPublisher = self.lineEdit_4.text()
+        self.tableItems(bookName, bookIsbn, bookAuthor, bookPublisher)
 
     def nextPage(self):
-        pass
+        if (self.currentPage == (self.allRows - 1) // 10):
+            pass
+        elif (self.currentPage < (self.allRows - 1) // 10):
+            self.tableWidget.clearContents()
+            resultRows = self.result
+            self.currentPage = self.currentPage + 1
+            # 判断该页行数是否够10
+            if (self.allRows >= 10 * (self.currentPage + 1)):
+                rowNum = 10
+            elif (self.allRows <= 10 * (self.currentPage + 1)):
+                rowNum = self.allRows - 10 * self.currentPage
+
+            for i in range(rowNum):
+                self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i + (self.currentPage) * 10]['title']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i + (self.currentPage) * 10]['isbn']))
+                self.tableWidget.setItem(i, 2, QTableWidgetItem(resultRows[i + (self.currentPage) * 10]['author']))
+                self.tableWidget.setItem(i, 3, QTableWidgetItem(resultRows[i + (self.currentPage) * 10]['classifaction']))
+                self.tableWidget.setItem(i, 4, QTableWidgetItem(resultRows[i + (self.currentPage) * 10]['publisher']))
+                self.tableWidget.setItem(i, 5, QTableWidgetItem(str(resultRows[i + (self.currentPage) * 10]['book_num'])))
+                self.tableWidget.setItem(i, 6, QTableWidgetItem(str(resultRows[i + (self.currentPage) * 10]['in_shelf_time'])))
+                self.tableWidget.setItem(i, 7, QTableWidgetItem(resultRows[i + (self.currentPage) * 10]['book_position']))
+                self.tableWidget.setItem(i, 8, QTableWidgetItem(str(resultRows[i + (self.currentPage) * 10]['price'])))
+
 
     def beforePage(self):
-        pass
+        if (self.currentPage == 0):
+            pass
+        else:
+            self.tableWidget.clearContents()
+            resultRows = self.result
+            self.currentPage = self.currentPage - 1
+            for i in range(10):
+                self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i + (self.currentPage) * 10]['title']))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i + (self.currentPage) * 10]['isbn']))
+                self.tableWidget.setItem(i, 2, QTableWidgetItem(resultRows[i + (self.currentPage) * 10]['author']))
+                self.tableWidget.setItem(i, 3,
+                                         QTableWidgetItem(resultRows[i + (self.currentPage) * 10]['classifaction']))
+                self.tableWidget.setItem(i, 4, QTableWidgetItem(resultRows[i + (self.currentPage) * 10]['publisher']))
+                self.tableWidget.setItem(i, 5,
+                                         QTableWidgetItem(str(resultRows[i + (self.currentPage) * 10]['book_num'])))
+                self.tableWidget.setItem(i, 6, QTableWidgetItem(
+                    str(resultRows[i + (self.currentPage) * 10]['in_shelf_time'])))
+                self.tableWidget.setItem(i, 7,
+                                         QTableWidgetItem(resultRows[i + (self.currentPage) * 10]['book_position']))
+                self.tableWidget.setItem(i, 8, QTableWidgetItem(str(resultRows[i + (self.currentPage) * 10]['price'])))
 
     def bookSearch(self):
         bookName = self.lineEdit.text()
@@ -174,7 +223,10 @@ class Ui_booksManage(object):
         self.tableItems(bookName, bookIsbn, bookAuthor, bookPublisher)
 
     def insertBook(self):
-        pass
+        self.paraAddBooks = QtWidgets.QDialog()
+        self.window = addBooks.Ui_insertBook()
+        self.window.setupUi(self.paraAddBooks)
+        self.paraAddBooks.show()
 
     def tableItems(self, name, isbn, author, publisher): #刷新表格
         if (name == "书名"):
@@ -188,9 +240,7 @@ class Ui_booksManage(object):
         conn = pymysql.connect(host='localhost', port=3306, user='root', password='admin', db='libMS', use_unicode=True,
                                charset='utf8')
         cur = conn.cursor(cursor=pymysql.cursors.DictCursor)
-        sql = "select * from books_catalogue"
-        if isbn != "":
-        
+        sql = "select * from books_catalogue where title like '%%%s%%' and isbn like '%%%s%%' and author like '%%%s%%' and publisher like '%%%s%%';" %(name, isbn, author, publisher)
         row = cur.execute(sql)
         if row == 0:
             self.msgBox_noStaff.show()
@@ -202,13 +252,15 @@ class Ui_booksManage(object):
             cur.close()
             conn.close()
             self.tableWidget.clearContents()
+            if row > 10:
+                row = 10
             for i in range(row):
                 self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i]['title']))
                 self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['isbn']))
                 self.tableWidget.setItem(i, 2, QTableWidgetItem(resultRows[i]['author']))
-                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['classifaction']))
-                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['publisher']))
-                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['book_num']))
-                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['in_shelf_time']))
-                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['book_position']))
-                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['price']))
+                self.tableWidget.setItem(i, 3, QTableWidgetItem(resultRows[i]['classifaction']))
+                self.tableWidget.setItem(i, 4, QTableWidgetItem(resultRows[i]['publisher']))
+                self.tableWidget.setItem(i, 5, QTableWidgetItem(str(resultRows[i]['book_num'])))
+                self.tableWidget.setItem(i, 6, QTableWidgetItem(str(resultRows[i]['in_shelf_time'])))
+                self.tableWidget.setItem(i, 7, QTableWidgetItem(resultRows[i]['book_position']))
+                self.tableWidget.setItem(i, 8, QTableWidgetItem(str(resultRows[i]['price'])))
