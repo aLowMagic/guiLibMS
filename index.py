@@ -8,6 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QDialog, QLineEdit
+from PyQt5.Qt import QIcon
 import pymysql
 from MainWindow import Ui_MainWindow
 import sys
@@ -19,9 +20,10 @@ class Ui_title_box(object):
         title_box.resize(600, 400)
         title_box.setMinimumSize(QtCore.QSize(600, 400))
         title_box.setMaximumSize(QtCore.QSize(600, 400))
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":image/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
-        title_box.setWindowIcon(icon)
+        title_box.setWindowIcon(QIcon(":image/logo.png"))
+        #icon = QtGui.QIcon()
+        #icon.addPixmap(QtGui.QPixmap(":image/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        #title_box.setWindowIcon(icon)
         self.title_label = QtWidgets.QLabel(title_box)
         self.title_label.setGeometry(QtCore.QRect(175, 80, 251, 41))
         font = QtGui.QFont()
@@ -51,7 +53,7 @@ class Ui_title_box(object):
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.lineEdit_2.setEchoMode(QLineEdit.Password)
         self.msgBox = QMessageBox(QMessageBox.Information, "用户名或密码错误", "用户名或密码错误", QMessageBox.Ok)
-        #self.otherMsgBox = QMessageBox(QMessageBox.Information, "未知错误", "未知错误", QMessageBox.Ok)
+        self.otherMsgBox = QMessageBox(QMessageBox.Information, "未知错误", "未知错误", QMessageBox.Ok)
 
 
         self.retranslateUi(title_box)
@@ -74,19 +76,20 @@ class Ui_title_box(object):
         self.mainPara.show()
 
     def indexJudge(self):
-        userName = self.lineEdit.text()
-        userKey = self.lineEdit_2.text()
-        conn = pymysql.connect(host='localhost', port=3306, user='libStaffSelector', password='libStaffSelector',
-                               db='libMS', charset='utf8')
-        cur = conn.cursor()
-        sql = "select * from manage_list where manage_name = '%s' and manage_key = '%s';" % (userName, userKey)
-        if cur.execute(sql) != 0:
-            self.loginSucceed()
-            #self.close()
-            self.lineEdit.clear()
-            self.lineEdit_2.clear()
-        else:
-            self.msgBox.show()
+        try:
+            userName = self.lineEdit.text()
+            userKey = self.lineEdit_2.text()
+            conn = pymysql.connect(host='localhost', port=3306, user='libStaffSelector', password='libStaffSelector',
+                                   db='libMS', charset='utf8')
+            cur = conn.cursor()
+            sql = "select * from manage_list where manage_name = '%s' and manage_key = '%s';" % (userName, userKey)
+            if cur.execute(sql) != 0:
+                self.loginSucceed()
+                self.lineEdit.clear()
+                self.lineEdit_2.clear()
+            else:
+                self.msgBox.show()
+        except:
+            self.otherMsgBox.show()
 
-    #def close(self):
-        #self.close()
+

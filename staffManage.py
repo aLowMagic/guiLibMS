@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QMessageBox
+from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QMessageBox, QInputDialog, QLineEdit
 import pymysql
 import addStaff
 
@@ -94,6 +94,7 @@ class Ui_staffManage(object):
         self.msgBox_deleteSuecceed = QMessageBox(QMessageBox.Information, "删除成功!", "删除成功！", QMessageBox.Ok)
         self.msgBox_noSelected = QMessageBox(QMessageBox.Information, "请选择一个项目", "请选择一个项目！", QMessageBox.Ok)
         self.msgBox_noUse = QMessageBox(QMessageBox.Information, "暂未开启该功能", "暂未开启该功能！", QMessageBox.Ok)
+        self.msgBox_wrongPassword = QMessageBox(QMessageBox.Information, "密码错误", "密码错误！", QMessageBox.Ok)
 
 
     def retranslateUi(self, staffManage):
@@ -154,7 +155,7 @@ class Ui_staffManage(object):
             managerId = self.tableWidget.item(row, 1).text()
             try:
                 conn = pymysql.connect(host='localhost', port=3306, user='root', password='admin', db='libMS',
-                                       use_unicode=True, charset='utf8')
+                                           use_unicode=True, charset='utf8')
                 cur = conn.cursor(cursor=pymysql.cursors.DictCursor)
                 sql = "delete from manage_list where manage_name = '%s' and manage_id = '%s';"%(managerName, managerId)
                 cur.execute(sql)
@@ -165,7 +166,6 @@ class Ui_staffManage(object):
                 self.tableItems("", "")
             except:
                 self.msgBox_deleteFailed.show()
-
     def editStaff(self):
         self.msgBox_noUse.show()
 

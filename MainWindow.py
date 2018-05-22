@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QInputDialog
 from borrow_return import *
 from staffManage import *
 from userManage import *
@@ -62,6 +63,8 @@ class Ui_MainWindow(object):
         self.staffManage.clicked.connect(self.showStaffManage)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.msgbox = QMessageBox(QMessageBox.Information, "密码错误！", "密码错误！", QMessageBox.Ok)
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "XXXX图书馆管理系统"))
@@ -77,10 +80,14 @@ class Ui_MainWindow(object):
         self.para1.show()
 
     def showUserManageWindow(self):
-        self.para2 = QtWidgets.QDialog()
-        self.window2 = Ui_userManage()
-        self.window2.setupUi(self.para2)
-        self.para2.show()
+        password, ok = QInputDialog.getText(QtWidgets.QWidget(), "权限验证", "请输入密码：", QLineEdit.Password, "")
+        if password == '123456':
+            self.para2 = QtWidgets.QDialog()
+            self.window2 = Ui_userManage()
+            self.window2.setupUi(self.para2)
+            self.para2.show()
+        else:
+            self.msgbox.show()
 
     def showBooksManage(self):
         self.para3 = QtWidgets.QDialog()
@@ -89,7 +96,11 @@ class Ui_MainWindow(object):
         self.para3.show()
 
     def showStaffManage(self):
-        self.para4 = QtWidgets.QDialog()
-        self.window4 = Ui_staffManage()
-        self.window4.setupUi(self.para4)
-        self.para4.show()
+        password, ok = QInputDialog.getText(QtWidgets.QWidget(), "权限验证", "请输入密码：", QLineEdit.Password, "")
+        if password == '123456':
+            self.para4 = QtWidgets.QDialog()
+            self.window4 = Ui_staffManage()
+            self.window4.setupUi(self.para4)
+            self.para4.show()
+        else:
+            self.msgbox.show()
