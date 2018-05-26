@@ -6,8 +6,9 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QTableWidgetItem, QTableWidget
+from PyQt5.QtGui import QIcon
 import pymysql
 import datetime
 import addBooks
@@ -17,9 +18,11 @@ class Ui_booksManage(object):
         booksManage.setObjectName("booksManage")
         booksManage.resize(761, 411)
         booksManage.setStyleSheet("*{background-color: rgb(255, 255, 255)}")
+        booksManage.setWindowIcon(QIcon('C:\\Users\\thePr\\Documents\\github\\guiLibMS\\image\\logo.png'))
         self.tableWidget = QtWidgets.QTableWidget(booksManage)
         self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
         self.tableWidget.setSelectionBehavior(QTableWidget.SelectRows)
+        self.tableWidget.setSelectionMode(QTableWidget.SingleSelection)
         self.tableWidget.setGeometry(QtCore.QRect(0, 0, 621, 331))
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(9)
@@ -226,6 +229,7 @@ class Ui_booksManage(object):
         self.paraAddBooks = QtWidgets.QDialog()
         self.window = addBooks.Ui_insertBook()
         self.window.setupUi(self.paraAddBooks)
+        self.paraAddBooks.setModal(True)
         self.paraAddBooks.show()
 
     def tableItems(self, name, isbn, author, publisher): #刷新表格

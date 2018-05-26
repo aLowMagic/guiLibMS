@@ -8,7 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QDialog, QLineEdit
-from PyQt5.Qt import QIcon
+from PyQt5.QtGui import QIcon
 import pymysql
 from MainWindow import Ui_MainWindow
 import sys
@@ -20,10 +20,7 @@ class Ui_title_box(object):
         title_box.resize(600, 400)
         title_box.setMinimumSize(QtCore.QSize(600, 400))
         title_box.setMaximumSize(QtCore.QSize(600, 400))
-        title_box.setWindowIcon(QIcon(":image/logo.png"))
-        #icon = QtGui.QIcon()
-        #icon.addPixmap(QtGui.QPixmap(":image/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
-        #title_box.setWindowIcon(icon)
+        title_box.setWindowIcon(QIcon('C:\\Users\\thePr\\Documents\\github\\guiLibMS\\image\\logo.png'))
         self.title_label = QtWidgets.QLabel(title_box)
         self.title_label.setGeometry(QtCore.QRect(175, 80, 251, 41))
         font = QtGui.QFont()
@@ -69,10 +66,10 @@ class Ui_title_box(object):
         self.label_2.setText(_translate("title_box", "密码"))
 
 
-    def loginSucceed(self):
+    def loginSucceed(self, userName, userKey):
         self.mainPara = QtWidgets.QWidget()
         self.main_Window = Ui_MainWindow()
-        self.main_Window.setupMainWindow(self.mainPara)
+        self.main_Window.setupMainWindow(self.mainPara, userName, userKey)
         self.mainPara.show()
 
     def indexJudge(self):
@@ -84,12 +81,11 @@ class Ui_title_box(object):
             cur = conn.cursor()
             sql = "select * from manage_list where manage_name = '%s' and manage_key = '%s';" % (userName, userKey)
             if cur.execute(sql) != 0:
-                self.loginSucceed()
+                self.loginSucceed(userName, userKey)
                 self.lineEdit.clear()
                 self.lineEdit_2.clear()
             else:
                 self.msgBox.show()
         except:
             self.otherMsgBox.show()
-
 

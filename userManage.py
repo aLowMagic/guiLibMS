@@ -7,7 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox
+from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox, QTableWidget
+from PyQt5.QtGui import QIcon
 import pymysql
 import addUser
 
@@ -16,9 +17,13 @@ class Ui_userManage(object):
         userManage.setObjectName("userManage")
         userManage.resize(477, 400)
         userManage.setStyleSheet("*{background-color: rgb(255, 255, 255)}")
+        userManage.setWindowIcon(QIcon('C:\\Users\\thePr\\Documents\\github\\guiLibMS\\image\\user.png'))
         self.tableWidget = QtWidgets.QTableWidget(userManage)
         self.tableWidget.setGeometry(QtCore.QRect(0, 0, 311, 331))
         self.tableWidget.setObjectName("tableWidget")
+        self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.tableWidget.setSelectionBehavior(QTableWidget.SelectRows)
+        self.tableWidget.setSelectionMode(QTableWidget.SingleSelection)
         self.tableWidget.setColumnCount(2)
         self.tableWidget.setRowCount(10)
         item = QtWidgets.QTableWidgetItem()
@@ -86,8 +91,8 @@ class Ui_userManage(object):
         self.pushButton_2.clicked.connect(self.deleteUser)
         #self.pushButton_3.clicked.connect(self.editStaff)
         self.pushButton_4.clicked.connect(self.addUser)
-        #self.pushButton_6.clicked.connect(self.nextPage)
-        #self.pushButton_5.clicked.connect(self.beforePage)
+        self.pushButton_5.clicked.connect(self.beforePage)
+        self.pushButton_6.clicked.connect(self.nextPage)
         QtCore.QMetaObject.connectSlotsByName(userManage)
 
     def retranslateUi(self, userManage):
@@ -120,23 +125,24 @@ class Ui_userManage(object):
         __sortingEnabled = self.tableWidget.isSortingEnabled()
         self.tableWidget.setSortingEnabled(False)
 
-        self.tableItems("", "")
+        self.currentPage = 0
+        self.tableItems("", "", self.currentPage)
 
         self.tableWidget.setSortingEnabled(__sortingEnabled)
         self.lineEdit.setText(_translate("userManage", "读者姓名"))
         self.lineEdit_2.setText(_translate("userManage", "读者id"))
-        self.pushButton.setText(_translate("userManage", "查询"))
+        self.pushButton.setText(_translate("userManage", "查询/刷新"))
         self.pushButton_2.setText(_translate("userManage", "删除"))
         self.pushButton_3.setText(_translate("userManage", "修改"))
         self.pushButton_4.setText(_translate("userManage", "添加"))
-        self.pushButton_5.setText(_translate("userManage", "下一页"))
-        self.pushButton_6.setText(_translate("userManage", "上一页"))
+        self.pushButton_5.setText(_translate("userManage", "上一页"))
+        self.pushButton_6.setText(_translate("userManage", "下一页"))
 
 
     def searchUser(self):
-        user_name = self.lineEdit.text()
-        user_id = self.lineEdit_2.text()
-        self.tableItems(user_name, user_id)
+        self.user_name = self.lineEdit.text()
+        self.user_id = self.lineEdit_2.text()
+        self.tableItems(self.user_name, self.user_id, 0)
 
     def deleteUser(self):
         if (self.tableWidget.currentRow() == 0 or self.tableWidget.currentItem() == None):
@@ -155,7 +161,7 @@ class Ui_userManage(object):
                 cur.close()
                 conn.close()
                 self.tableWidget.clearContents()
-                self.tableItems("", "")
+                self.tableItems("", "", 0)
             except:
                 self.msgBox_deleteFailed.show()
 
@@ -163,69 +169,50 @@ class Ui_userManage(object):
         self.paraAddUser = QtWidgets.QDialog()
         self.window = addUser.Ui_addUser()
         self.window.setupUi(self.paraAddUser)
+        self.paraAddUser.setModal(True)
         self.paraAddUser.show()
 
     def beforePage(self):
         if (self.currentPage == 0):
             pass
         else:
-            self.tableWidget.clearContents()
-            resultRows = self.result
-            self.currentPage = self.currentPage - 1
-            for i in range(10):
-                self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i + (self.currentPage)*10]['user_name']))
-                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i + (self.currentPage)*10]['user_id']))
+            self.currentPage -= 1
+            self.tableItems(self.currentName, self.currentId, self.currentPage)
 
     def nextPage(self):
-        if(self.currentPage == (self.allRows-1) // 10):
+        if(self.currentPage == self.pageNum):
             pass
-        elif(self.currentPage < (self.allRows-1) // 10):
-            self.tableWidget.clearContents()
-            resultRows = self.result
-            self.currentPage = self.currentPage + 1
-            #判断该页行数是否够10
-            if (self.allRows >= 10*(self.currentPage + 1)):
-                rowNum = 10
-            elif (self.allRows <= 10*(self.currentPage + 1)):
-                rowNum = self.allRows - 10 * self.currentPage
-
-            for i in range(rowNum):
-                self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i + (self.currentPage)*10]['user_name']))
-                self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i + (self.currentPage)*10]['user_id']))
+        elif(self.currentPage < self.pageNum):
+            self.currentPage += 1
+            self.tableItems(self.currentName, self.currentId, self.currentPage)
 
 
-
-    def tableItems(self, user_name, user_id):
+    def tableItems(self, user_name, user_id, page):
         if (user_name == "读者姓名"):
             user_name = ""
         if (user_id == "读者id"):
             user_id = ""
+        self.currentName = user_name
+        self.currentId = user_id
         conn = pymysql.connect(host='localhost', port=3306, user='root', password='admin', db='libMS', use_unicode=True,
                                charset='utf8')
         cur = conn.cursor(cursor=pymysql.cursors.DictCursor)
-        sql = "select user_name, user_id from user_manage"
-        if user_name != "" and user_id != "":
-            sql += " where user_name = '%s' and user_id = '%s';" %(user_name, user_id)
-        elif user_name != "":
-            sql += " where user_name = '%s';" % user_name
-        elif user_id != "":
-            sql += " where user_id = '%s';" % user_id
-        else:
-            sql += ";"
+        sqlRow = "select user_name, user_id from user_manage where user_name like '%%%s%%' and user_id like '%%%s%%';"\
+                 %(user_name, user_id)
+        sql = "select user_name, user_id from user_manage where user_name like '%%%s%%' and user_id like '%%%s%%' limit %s,%s;"\
+              %(user_name, user_id, page*10, (page+1)*10)
+
+        allRow = cur.execute(sqlRow)
+        self.pageNum = int(allRow / 10)
 
         row = cur.execute(sql)
         if row == 0:
             self.msgBox_noUser.show()
         elif row != 0:
             resultRows = cur.fetchall()
-            self.result = resultRows
-            self.allRows = row
-            self.currentPage = 0
             cur.close()
             conn.close()
             self.tableWidget.clearContents()
-            if row > 10:
-                row = 10
             for i in range(row):
                 self.tableWidget.setItem(i, 0, QTableWidgetItem(resultRows[i]['user_name']))
                 self.tableWidget.setItem(i, 1, QTableWidgetItem(resultRows[i]['user_id']))

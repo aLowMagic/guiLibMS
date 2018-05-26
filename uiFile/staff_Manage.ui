@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>477</width>
+    <width>550</width>
     <height>400</height>
    </rect>
   </property>
@@ -21,12 +21,12 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>311</width>
+     <width>361</width>
      <height>331</height>
     </rect>
    </property>
    <attribute name="horizontalHeaderDefaultSectionSize">
-    <number>140</number>
+    <number>110</number>
    </attribute>
    <row>
     <property name="text">
@@ -102,51 +102,56 @@
      </color>
     </property>
    </column>
+   <column>
+    <property name="text">
+     <string>员工权限</string>
+    </property>
+   </column>
    <item row="0" column="0">
     <property name="text">
-     <string>test</string>
+     <string/>
     </property>
    </item>
    <item row="0" column="1">
     <property name="text">
-     <string>test</string>
+     <string/>
     </property>
    </item>
    <item row="1" column="0">
     <property name="text">
-     <string>43443</string>
+     <string/>
     </property>
    </item>
    <item row="1" column="1">
     <property name="text">
-     <string>6456345</string>
+     <string/>
     </property>
    </item>
    <item row="2" column="0">
     <property name="text">
-     <string>23654</string>
+     <string/>
     </property>
    </item>
    <item row="2" column="1">
     <property name="text">
-     <string>4635</string>
+     <string/>
     </property>
    </item>
    <item row="3" column="0">
     <property name="text">
-     <string>测试</string>
+     <string/>
     </property>
    </item>
    <item row="3" column="1">
     <property name="text">
-     <string>测试</string>
+     <string/>
     </property>
    </item>
   </widget>
   <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>400</x>
      <y>50</y>
      <width>115</width>
      <height>30</height>
@@ -159,7 +164,7 @@
   <widget class="QLineEdit" name="lineEdit_2">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>400</x>
      <y>100</y>
      <width>115</width>
      <height>30</height>
@@ -172,7 +177,7 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>420</x>
      <y>150</y>
      <width>80</width>
      <height>30</height>
@@ -185,7 +190,7 @@
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>420</x>
      <y>200</y>
      <width>80</width>
      <height>30</height>
@@ -198,7 +203,7 @@
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>420</x>
      <y>250</y>
      <width>80</width>
      <height>30</height>
@@ -211,7 +216,7 @@
   <widget class="QPushButton" name="pushButton_4">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>420</x>
      <y>300</y>
      <width>80</width>
      <height>30</height>
@@ -224,7 +229,7 @@
   <widget class="QPushButton" name="pushButton_5">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>70</x>
      <y>350</y>
      <width>80</width>
      <height>30</height>
@@ -237,7 +242,7 @@
   <widget class="QPushButton" name="pushButton_6">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>210</x>
      <y>350</y>
      <width>80</width>
      <height>30</height>

@@ -8,15 +8,18 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QInputDialog
+import pymysql
+from PyQt5.QtGui import *
 from borrow_return import *
 from staffManage import *
 from userManage import *
 from bookManage import *
 
 class Ui_MainWindow(object):
-    def setupMainWindow(self, MainWindow):
+    def setupMainWindow(self, MainWindow, para1, para2):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
+        MainWindow.setWindowIcon(QIcon('C:\\Users\\thePr\\Documents\\github\\guiLibMS\\image\\logo.png'))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -64,6 +67,24 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.msgbox = QMessageBox(QMessageBox.Information, "密码错误！", "密码错误！", QMessageBox.Ok)
+        self.msgbox_wrongSelect = QMessageBox(QMessageBox.Information, "error", "无服务器信号")
+        self.msgbox_noPermission = QMessageBox(QMessageBox.Information, "error", "您无相应权限！", QMessageBox.Ok)
+
+        #判断该用户的权限级别
+        self.userName = para1
+        self.userKey = para2
+        try:
+            conn = pymysql.connect(host='localhost', port=3306, user='libStaffSelector', password='libStaffSelector',
+                                   db='libMS', charset='utf8')
+            cur = conn.cursor(cursor=pymysql.cursors.DictCursor)
+            sql = "select permission from manage_list where manage_name = '%s' and manage_key = '%s';" % (self.userName, self.userKey)
+            cur.execute(sql)
+            res = cur.fetchall()
+            self.permission = int(res[0]['permission'])
+        except:
+            self.msgbox_wrongSelect.show()
+
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -73,34 +94,49 @@ class Ui_MainWindow(object):
         self.user_manage.setText(_translate("MainWindow", "用户管理"))
         self.bookManage.setText(_translate("MainWindow", "图书管理"))
 
-    def showBorrow_ReturnWindow(self):
-        self.para1 = QtWidgets.QDialog()
-        self.window1 = Ui_borrow_return()
-        self.window1.setupUi(self.para1)
-        self.para1.show()
 
-    def showUserManageWindow(self):
-        password, ok = QInputDialog.getText(QtWidgets.QWidget(), "权限验证", "请输入密码：", QLineEdit.Password, "")
-        if password == '123456':
-            self.para2 = QtWidgets.QDialog()
-            self.window2 = Ui_userManage()
-            self.window2.setupUi(self.para2)
-            self.para2.show()
+
+    def showBorrow_ReturnWindow(self):#权限码<=4
+        if self.permission <= 4:
+            self.para1 = QtWidgets.QDialog()
+            self.window1 = Ui_borrow_return()
+            self.window1.setupUi(self.para1)
+            self.para1.setModal(True)
+            self.para1.show()
         else:
-            self.msgbox.show()
+            self.msgbox_noPermission.show()
 
-    def showBooksManage(self):
-        self.para3 = QtWidgets.QDialog()
-        self.window3 = Ui_booksManage()
-        self.window3.setupUi(self.para3)
-        self.para3.show()
-
-    def showStaffManage(self):
-        password, ok = QInputDialog.getText(QtWidgets.QWidget(), "权限验证", "请输入密码：", QLineEdit.Password, "")
-        if password == '123456':
-            self.para4 = QtWidgets.QDialog()
-            self.window4 = Ui_staffManage()
-            self.window4.setupUi(self.para4)
-            self.para4.show()
+    def showUserManageWindow(self):#权限码<=2
+        if self.permission <= 2:
+            password, ok = QInputDialog.getText(QtWidgets.QWidget(), "权限验证", "请再次输入密码：", QLineEdit.Password, "")
+            if password == self.userKey:
+                self.para2 = QtWidgets.QDialog()
+                self.window2 = Ui_userManage()
+                self.window2.setupUi(self.para2)
+                self.para2.show()
+            else:
+                self.msgbox.show()
         else:
-            self.msgbox.show()
+            self.msgbox_noPermission.show()
+
+    def showBooksManage(self):#权限码<=3
+        if self.permission <= 3:
+            self.para3 = QtWidgets.QDialog()
+            self.window3 = Ui_booksManage()
+            self.window3.setupUi(self.para3)
+            self.para3.show()
+        else:
+            self.msgbox_noPermission.show()
+
+    def showStaffManage(self):#权限码<=1
+        if self.permission <= 1:
+            password, ok = QInputDialog.getText(QtWidgets.QWidget(), "权限验证", "请再次输入密码：", QLineEdit.Password, "")
+            if password == self.userKey:
+                self.para4 = QtWidgets.QDialog()
+                self.window4 = Ui_staffManage()
+                self.window4.setupUi(self.para4)
+                self.para4.show()
+            else:
+                self.msgbox.show()
+        else:
+            self.msgbox_noPermission.show()

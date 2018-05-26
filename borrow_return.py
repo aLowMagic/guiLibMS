@@ -9,6 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMessageBox, QApplication
+from PyQt5.QtGui import QIcon
 import datetime
 import time
 import pymysql
@@ -17,6 +18,7 @@ class Ui_borrow_return(object):
     def setupUi(self, borrow_return):
         borrow_return.setObjectName("borrow_return")
         borrow_return.resize(400, 400)
+        borrow_return.setWindowIcon(QIcon('C:\\Users\\thePr\\Documents\\github\\guiLibMS\\image\\br.png'))
         self.toolBox = QtWidgets.QToolBox(borrow_return)
         self.toolBox.setGeometry(QtCore.QRect(0, 0, 400, 400))
         self.toolBox.setObjectName("toolBox")
@@ -63,29 +65,46 @@ class Ui_borrow_return(object):
         self.dateEdit.setCalendarPopup(True)
         self.dateEdit.setCurrentSectionIndex(0)
         self.dateEdit.setTimeSpec(QtCore.Qt.LocalTime)
-        self.year = datetime.datetime.now().year
-        self.month = datetime.datetime.now().month
-        self.day = datetime.datetime.now().day
-        self.dateEdit.setDate(QtCore.QDate(self.year, self.month, self.day))
+        self.dateEdit.setDate(QtCore.QDate(2018, 5, 9))
         self.dateEdit.setObjectName("dateEdit")
         self.spinBox = QtWidgets.QSpinBox(self.page_1)
         self.spinBox.setGeometry(QtCore.QRect(190, 240, 50, 30))
         self.spinBox.setObjectName("spinBox")
-        self.textEdit = QtWidgets.QTextEdit(self.page_1)
-        self.textEdit.setGeometry(QtCore.QRect(60, 40, 110, 30))
-        self.textEdit.setObjectName("textEdit")
-        self.textBrowser = QtWidgets.QTextBrowser(self.page_1)
-        self.textBrowser.setGeometry(QtCore.QRect(60, 90, 110, 30))
-        self.textBrowser.setObjectName("textBrowser")
-        self.textBrowser_2 = QtWidgets.QTextBrowser(self.page_1)
-        self.textBrowser_2.setGeometry(QtCore.QRect(60, 140, 110, 30))
-        self.textBrowser_2.setObjectName("textBrowser_2")
-        self.textBrowser_4 = QtWidgets.QTextBrowser(self.page_1)
-        self.textBrowser_4.setGeometry(QtCore.QRect(60, 190, 110, 30))
-        self.textBrowser_4.setObjectName("textBrowser_4")
-        self.textBrowser_5 = QtWidgets.QTextBrowser(self.page_1)
-        self.textBrowser_5.setGeometry(QtCore.QRect(60, 240, 110, 30))
-        self.textBrowser_5.setObjectName("textBrowser_5")
+        self.label = QtWidgets.QLabel(self.page_1)
+        self.label.setGeometry(QtCore.QRect(70, 40, 110, 30))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.label_2 = QtWidgets.QLabel(self.page_1)
+        self.label_2.setGeometry(QtCore.QRect(70, 90, 110, 30))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_2.setFont(font)
+        self.label_2.setObjectName("label_2")
+        self.label_3 = QtWidgets.QLabel(self.page_1)
+        self.label_3.setGeometry(QtCore.QRect(70, 140, 110, 30))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_3.setFont(font)
+        self.label_3.setObjectName("label_3")
+        self.label_4 = QtWidgets.QLabel(self.page_1)
+        self.label_4.setGeometry(QtCore.QRect(70, 190, 110, 30))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_4.setFont(font)
+        self.label_4.setObjectName("label_4")
+        self.label_5 = QtWidgets.QLabel(self.page_1)
+        self.label_5.setGeometry(QtCore.QRect(70, 240, 110, 30))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_5.setFont(font)
+        self.label_5.setObjectName("label_5")
         self.toolBox.addItem(self.page_1, "")
         self.page_2 = QtWidgets.QWidget()
         self.page_2.setGeometry(QtCore.QRect(0, 0, 400, 348))
@@ -102,12 +121,20 @@ class Ui_borrow_return(object):
         font.setFamily("微软雅黑")
         self.pushButton_3.setFont(font)
         self.pushButton_3.setObjectName("pushButton_3")
-        self.textBrowser_6 = QtWidgets.QTextBrowser(self.page_2)
-        self.textBrowser_6.setGeometry(QtCore.QRect(60, 60, 110, 30))
-        self.textBrowser_6.setObjectName("textBrowser_6")
-        self.textBrowser_3 = QtWidgets.QTextBrowser(self.page_2)
-        self.textBrowser_3.setGeometry(QtCore.QRect(60, 130, 110, 30))
-        self.textBrowser_3.setObjectName("textBrowser_3")
+        self.label_6 = QtWidgets.QLabel(self.page_2)
+        self.label_6.setGeometry(QtCore.QRect(70, 60, 110, 30))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_6.setFont(font)
+        self.label_6.setObjectName("label_6")
+        self.label_7 = QtWidgets.QLabel(self.page_2)
+        self.label_7.setGeometry(QtCore.QRect(70, 130, 110, 30))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_7.setFont(font)
+        self.label_7.setObjectName("label_7")
         self.toolBox.addItem(self.page_2, "")
 
         self.retranslateUi(borrow_return)
@@ -128,49 +155,21 @@ class Ui_borrow_return(object):
     def retranslateUi(self, borrow_return):
         _translate = QtCore.QCoreApplication.translate
         borrow_return.setWindowTitle(_translate("borrow_return", "借/还书管理"))
-        self.textEdit.setHtml(_translate("borrow_return", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'微软雅黑\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'SimSun\'; font-weight:600;\">图书ISBN代码：</span></p></body></html>"))
-        self.textBrowser.setHtml(_translate("borrow_return", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'微软雅黑\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'SimSun\'; font-size:10pt; font-weight:600;\">用户证件号码：</span></p></body></html>"))
-        self.textBrowser_2.setHtml(_translate("borrow_return", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'微软雅黑\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'SimSun\'; font-size:10pt; font-weight:600;\">借书时长：</span></p></body></html>"))
-        self.textBrowser_4.setHtml(_translate("borrow_return", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'微软雅黑\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'SimSun\'; font-size:10pt; font-weight:600;\">借出时间：</span></p></body></html>"))
-        self.textBrowser_5.setHtml(_translate("borrow_return", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'微软雅黑\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'SimSun\'; font-size:10pt; font-weight:600;\">借出数目：</span></p></body></html>"))
         self.pushButton.setText(_translate("borrow_return", "确定"))
         self.comboBox.setItemText(0, _translate("borrow_return", "一个月"))
         self.comboBox.setItemText(1, _translate("borrow_return", "三个月"))
         self.comboBox.setItemText(2, _translate("borrow_return", "六个月"))
         self.comboBox.setItemText(3, _translate("borrow_return", "一年"))
         self.dateEdit.setDisplayFormat(_translate("borrow_return", "yyyy/M/d"))
+        self.label.setText(_translate("borrow_return", "图书ISBN代码"))
+        self.label_2.setText(_translate("borrow_return", "用户证件号码："))
+        self.label_3.setText(_translate("borrow_return", "借书时长："))
+        self.label_4.setText(_translate("borrow_return", "借出时间："))
+        self.label_5.setText(_translate("borrow_return", "借出数目："))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_1), _translate("borrow_return", "借出图书"))
-        self.textBrowser_6.setHtml(_translate("borrow_return", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'SimSun\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">图书ISBN代码：</span></p></body></html>"))
-        self.textBrowser_3.setHtml(_translate("borrow_return", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'SimSun\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">读者证件号码：</span></p></body></html>"))
         self.pushButton_3.setText(_translate("borrow_return", "确定"))
+        self.label_6.setText(_translate("borrow_return", "图书ISBN代码："))
+        self.label_7.setText(_translate("borrow_return", "读者证件号码："))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_2), _translate("borrow_return", "归还图书"))
 
     def borrowButton(self):
