@@ -151,8 +151,10 @@ class Ui_staffManage(object):
         self.selectSqlItems("", "", self.currentPage)
 
         self.tableWidget.setSortingEnabled(__sortingEnabled)
-        self.lineEdit.setText(_translate("staffManage", "员工姓名"))
-        self.lineEdit_2.setText(_translate("staffManage", "员工id"))
+        #self.lineEdit.setText(_translate("staffManage", "员工姓名"))
+        self.lineEdit.setPlaceholderText("员工姓名")
+        #self.lineEdit_2.setText(_translate("staffManage", "员工id"))
+        self.lineEdit_2.setPlaceholderText("员工id")
         self.pushButton.setText(_translate("staffManage", "查询/刷新"))
         self.pushButton_2.setText(_translate("staffManage", "删除"))
         self.pushButton_3.setText(_translate("staffManage", "修改"))
@@ -227,10 +229,6 @@ class Ui_staffManage(object):
 
 
     def selectSqlItems(self, userName, userId, page):
-        if (userName == "员工姓名"):
-            userName = ""
-        if (userId == "员工id"):
-            userId = ""
         self.currentName = userName
         self.currentId = userId
         conn = pymysql.connect(host='localhost', port=3306, user='root', password='admin', db='libMS', use_unicode=True,

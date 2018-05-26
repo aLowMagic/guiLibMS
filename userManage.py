@@ -129,8 +129,10 @@ class Ui_userManage(object):
         self.tableItems("", "", self.currentPage)
 
         self.tableWidget.setSortingEnabled(__sortingEnabled)
-        self.lineEdit.setText(_translate("userManage", "读者姓名"))
-        self.lineEdit_2.setText(_translate("userManage", "读者id"))
+        #self.lineEdit.setText(_translate("userManage", "读者姓名"))
+        self.lineEdit.setPlaceholderText("读者姓名")
+        #self.lineEdit_2.setText(_translate("userManage", "读者id"))
+        self.lineEdit_2.setPlaceholderText("读者id")
         self.pushButton.setText(_translate("userManage", "查询/刷新"))
         self.pushButton_2.setText(_translate("userManage", "删除"))
         self.pushButton_3.setText(_translate("userManage", "修改"))

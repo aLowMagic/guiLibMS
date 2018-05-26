@@ -88,4 +88,3 @@ class Ui_title_box(object):
                 self.msgBox.show()
         except:
             self.otherMsgBox.show()
-
