@@ -9,7 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QInputDialog
 import pymysql
-from PyQt5.QtGui import *
+from PyQt5.QtGui import QIcon
 from borrow_return import *
 from staffManage import *
 from userManage import *
@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
     def setupMainWindow(self, MainWindow, para1, para2):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
-        MainWindow.setWindowIcon(QIcon('C:\\Users\\thePr\\Documents\\github\\guiLibMS\\image\\logo.png'))
+        MainWindow.setWindowIcon(QIcon('image/logo.png'))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -31,6 +31,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.borrow_return  = QtWidgets.QPushButton(self.centralwidget)
         self.borrow_return.setGeometry(QtCore.QRect(30, 30, 350, 250))
+        self.borrow_return.setStyleSheet('QPushButton{border-image:url(image/br.png)}')
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
         font.setPointSize(26)
@@ -38,6 +39,7 @@ class Ui_MainWindow(object):
         self.borrow_return.setObjectName("borrow")
         self.staffManage = QtWidgets.QPushButton(self.centralwidget)
         self.staffManage.setGeometry(QtCore.QRect(420, 320, 350, 250))
+        self.staffManage.setStyleSheet('QPushButton{border-image:url(image/manager.png)}')
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
         font.setPointSize(26)
@@ -45,6 +47,7 @@ class Ui_MainWindow(object):
         self.staffManage.setObjectName("staffManage")
         self.user_manage = QtWidgets.QPushButton(self.centralwidget)
         self.user_manage.setGeometry(QtCore.QRect(420, 30, 350, 250))
+        self.user_manage.setStyleSheet('QPushButton{border-image:url(image/user.png)}')
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
         font.setPointSize(26)
@@ -52,6 +55,7 @@ class Ui_MainWindow(object):
         self.user_manage.setObjectName("return_2")
         self.bookManage = QtWidgets.QPushButton(self.centralwidget)
         self.bookManage.setGeometry(QtCore.QRect(30, 320, 350, 250))
+        self.bookManage.setStyleSheet('QPushButton{border-image:url(image/logo.jpg)}')
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
         font.setPointSize(26)

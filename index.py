@@ -57,6 +57,7 @@ class Ui_title_box(object):
         self.input_button.clicked.connect(self.indexJudge)
         QtCore.QMetaObject.connectSlotsByName(title_box)
 
+
     def retranslateUi(self, title_box):
         _translate = QtCore.QCoreApplication.translate
         title_box.setWindowTitle(_translate("title_box", "XXXX图书馆管理系统"))
